@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <title>JS Challenge 2</title>
+    <style>
+
+        #originBox{
+            height: 200px;
+            width: 200px;
+        }
+
+    </style>
+</head>
+<body>
+     <div id="originBox"></div>
+
+
+    <script src="colorGenerator.js"></script>
+    <script>
+
+        function addHover(element,orignalColor, hoverColor){
+
+            element.style.backgroundColor = orignalColor;
+            element.onmouseout   = () => element.style.backgroundColor = orignalColor;
+            element.onmouseenter = () => element.style.backgroundColor = hoverColor;  
+        }
+
+        // access origin Box + assign colors
+        var originBox = document.getElementById("originBox");
+        var originBoxlColor = nextColor();      //red
+        var originBoxHoverColor = nextColor();  // blue
+
+        // add bg color + hover
+        addHover(originBox, originBoxlColor, originBoxHoverColor);
+
+
+        // onclick :
+        originBox.onclick = () => {
+
+            // access current element
+            let currBox = event.target;
+
+            // copy box + assign colors
+            let childBox = document.createElement("div");
+            let currBgColor = currBox.style.backgroundColor;
+            let childHoverColor = nextColor();
+
+            // add bg color + hover
+            addHover(childBox, currBgColor, childHoverColor);
+
+            // assign parent Func + rm from parent
+            childBox.onclick = currBox.onclick;
+            currBox.onclick = null;
+
+            // Append to body
+            childBox.style.width = childBox.style.height = "200px";
+            document.body.appendChild(childBox);
+        };
+
+    </script>
+    
+</body>
+</html>
